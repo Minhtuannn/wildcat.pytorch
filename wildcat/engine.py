@@ -84,6 +84,8 @@ class Engine(object):
 
         # record loss
         self.state['loss_batch'] = self.state['loss'].data[0]
+        if isinstance(self.state['loss_batch'], torch.Tensor):
+            self.state['loss_batch'] = self.state['loss_batch'].cpu().numpy()
         self.state['meter_loss'].add(self.state['loss_batch'])
 
         if display and self.state['print_freq'] != 0 and self.state['iteration'] % self.state['print_freq'] == 0:
